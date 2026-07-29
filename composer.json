@@ -1,0 +1,52 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "tracium/nette",
+    "description": "Fail-safe Nette SDK for Tracium customer integration analytics.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "ext-curl": "*",
+        "nette/application": "^3.2 || ^3.3",
+        "nette/di": "^3.1 || ^3.2",
+        "nette/http": "^3.3 || ^3.4",
+        "nette/schema": "^1.2 || ^1.3",
+        "php": "^8.2",
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
+        "tracium/php-core": "^0.1"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tracium\\Nette\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tracium\\Nette\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "phpstan": "phpstan analyse --memory-limit=512M"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../php-core",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "tracium/php-core": "0.1.0"
+                }
+            }
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
