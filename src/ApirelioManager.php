@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette;
 
-use Nette\Application\Request;
-use Nette\Http\IRequest;
-use Nette\Http\IResponse;
-use Psr\Log\LoggerInterface;
-use Throwable;
 use Apirelio\Core\Data\EventContext;
 use Apirelio\Core\ErrorCodeExtractor;
 use Apirelio\Core\EventFactory;
@@ -18,6 +13,11 @@ use Apirelio\Nette\Contracts\CustomerResolver;
 use Apirelio\Nette\Contracts\EventTransport;
 use Apirelio\Nette\Data\ApirelioApplication;
 use Apirelio\Nette\Support\RouteNormalizer;
+use Nette\Application\Request;
+use Nette\Http\IRequest;
+use Nette\Http\IResponse;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
 final class ApirelioManager
 {
@@ -36,9 +36,9 @@ final class ApirelioManager
         private readonly ApplicationResolver $applications,
         private readonly array $config,
         private readonly ?LoggerInterface $logger = null,
-        private readonly EventFactory $events = new EventFactory(),
-        private readonly MetadataSanitizer $metadata = new MetadataSanitizer(),
-        private readonly ErrorCodeExtractor $errorCodes = new ErrorCodeExtractor(),
+        private readonly EventFactory $events = new EventFactory,
+        private readonly MetadataSanitizer $metadata = new MetadataSanitizer,
+        private readonly ErrorCodeExtractor $errorCodes = new ErrorCodeExtractor,
     ) {}
 
     public function setErrorCode(string $errorCode): self
@@ -57,7 +57,7 @@ final class ApirelioManager
     }
 
     /**
-     * @param array<string, bool|float|int|string|null> $metadata
+     * @param  array<string, bool|float|int|string|null>  $metadata
      */
     public function track(string $event, string $integration, array $metadata = []): void
     {
@@ -172,7 +172,7 @@ final class ApirelioManager
     }
 
     /**
-     * @param array<string, bool|float|int|string|null> $metadata
+     * @param  array<string, bool|float|int|string|null>  $metadata
      * @return array<string, bool|float|int|string|null>
      */
     private function sanitizeMetadata(array $metadata): array

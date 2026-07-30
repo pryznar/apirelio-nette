@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Tests;
 
+use Apirelio\Nette\Support\RouteNormalizer;
 use Nette\Application\Request;
 use PHPUnit\Framework\TestCase;
-use Apirelio\Nette\Support\RouteNormalizer;
 
 final class RouteNormalizerTest extends TestCase
 {
     public function test_it_removes_high_cardinality_identifiers_from_paths(): void
     {
-        $normalizer = new RouteNormalizer();
+        $normalizer = new RouteNormalizer;
 
         self::assertSame('/api/invoices/{id}', $normalizer->normalize('/api/invoices/12345'));
         self::assertSame(
@@ -25,6 +25,6 @@ final class RouteNormalizerTest extends TestCase
     {
         $request = new Request('Api:Invoice', 'POST', ['action' => 'create']);
 
-        self::assertSame('Api:Invoice:create', (new RouteNormalizer())->name($request));
+        self::assertSame('Api:Invoice:create', (new RouteNormalizer)->name($request));
     }
 }

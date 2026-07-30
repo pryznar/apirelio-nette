@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\DI;
 
-use Nette\Application\Application;
-use Nette\DI\CompilerExtension;
-use Nette\DI\Definitions\Reference;
-use Nette\DI\Definitions\ServiceDefinition;
-use LogicException;
-use Nette\Schema\Expect;
-use Nette\Schema\Schema;
-use Psr\Log\LoggerInterface;
+use Apirelio\Nette\ApirelioManager;
 use Apirelio\Nette\Application\RequestTracker;
 use Apirelio\Nette\Contracts\ApplicationResolver;
 use Apirelio\Nette\Contracts\CustomerResolver;
@@ -19,10 +12,17 @@ use Apirelio\Nette\Contracts\EventTransport;
 use Apirelio\Nette\Resolver\NullApplicationResolver;
 use Apirelio\Nette\Resolver\NullCustomerResolver;
 use Apirelio\Nette\Support\RouteNormalizer;
-use Apirelio\Nette\ApirelioManager;
 use Apirelio\Nette\Transport\CurlIngestionClient;
 use Apirelio\Nette\Transport\FileBufferTransport;
 use Apirelio\Nette\Transport\HttpBatchTransport;
+use LogicException;
+use Nette\Application\Application;
+use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\Reference;
+use Nette\DI\Definitions\ServiceDefinition;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
+use Psr\Log\LoggerInterface;
 
 final class ApirelioExtension extends CompilerExtension
 {

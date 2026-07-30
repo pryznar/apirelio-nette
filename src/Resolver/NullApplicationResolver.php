@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Resolver;
 
-use Nette\Application\Request;
 use Apirelio\Nette\Contracts\ApplicationResolver;
 use Apirelio\Nette\Data\ApirelioApplication;
+use Nette\Application\Request;
 
 final readonly class NullApplicationResolver implements ApplicationResolver
 {

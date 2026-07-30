@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Contracts;
 
-use Nette\Application\Request;
 use Apirelio\Nette\Data\ApirelioApplication;
+use Nette\Application\Request;
 
 interface ApplicationResolver
 {

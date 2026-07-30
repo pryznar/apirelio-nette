@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Tests;
 
+use Apirelio\Nette\ApirelioManager;
+use Apirelio\Nette\Contracts\ApplicationResolver;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Contracts\EventTransport;
+use Apirelio\Nette\Data\ApirelioApplication;
+use Apirelio\Nette\Data\ApirelioCustomer;
+use Apirelio\Nette\Support\RouteNormalizer;
 use Nette\Application\Request;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
@@ -11,13 +18,6 @@ use Nette\Http\UrlScript;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use RuntimeException;
-use Apirelio\Nette\Contracts\ApplicationResolver;
-use Apirelio\Nette\Contracts\CustomerResolver;
-use Apirelio\Nette\Contracts\EventTransport;
-use Apirelio\Nette\Data\ApirelioApplication;
-use Apirelio\Nette\Data\ApirelioCustomer;
-use Apirelio\Nette\Support\RouteNormalizer;
-use Apirelio\Nette\ApirelioManager;
 
 final class ApirelioManagerTest extends TestCase
 {
@@ -63,7 +63,8 @@ final class ApirelioManagerTest extends TestCase
 
     public function test_transport_failure_never_escapes_into_the_application(): void
     {
-        $transport = new class implements EventTransport {
+        $transport = new class implements EventTransport
+        {
             public function send(array $events): void
             {
                 throw new RuntimeException('Network unavailable');
@@ -89,13 +90,15 @@ final class ApirelioManagerTest extends TestCase
         $httpResponse->method('getHeader')->willReturnCallback(
             static fn (string $header): ?string => strtolower($header) === 'content-length' ? '48' : null,
         );
-        $customers = new class implements CustomerResolver {
+        $customers = new class implements CustomerResolver
+        {
             public function resolve(Request $request): ApirelioCustomer
             {
                 return new ApirelioCustomer('customer_42', 'Acme Europe', 'growth');
             }
         };
-        $applications = new class implements ApplicationResolver {
+        $applications = new class implements ApplicationResolver
+        {
             public function resolve(Request $request): ApirelioApplication
             {
                 return new ApirelioApplication('billing-production', 'Billing Production');
@@ -106,18 +109,19 @@ final class ApirelioManagerTest extends TestCase
             $httpRequest,
             $httpResponse,
             $transport,
-            new RouteNormalizer(),
+            new RouteNormalizer,
             $customers,
             $applications,
             $this->config(),
-            new NullLogger(),
+            new NullLogger,
         );
     }
 
     /** @return EventTransport&object{events: list<array<string, mixed>>} */
     private function recordingTransport(): EventTransport
     {
-        return new class implements EventTransport {
+        return new class implements EventTransport
+        {
             /** @var list<array<string, mixed>> */
             public array $events = [];
 

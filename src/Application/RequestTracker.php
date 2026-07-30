@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Application;
 
+use Apirelio\Nette\ApirelioManager;
 use Nette\Application\Application;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use Throwable;
-use Apirelio\Nette\ApirelioManager;
 
 final class RequestTracker
 {

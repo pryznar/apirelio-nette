@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Transport;
 
+use Apirelio\Core\Contracts\IngestionClient;
 use CurlHandle;
 use JsonException;
 use RuntimeException;
-use Apirelio\Core\Contracts\IngestionClient;
 
 final readonly class CurlIngestionClient implements IngestionClient
 {

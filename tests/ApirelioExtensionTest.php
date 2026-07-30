@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Apirelio\Nette\Tests;
 
+use Apirelio\Nette\Application\RequestTracker;
+use Apirelio\Nette\Contracts\EventTransport;
+use Apirelio\Nette\DI\ApirelioExtension;
+use Apirelio\Nette\Transport\FileBufferTransport;
+use Apirelio\Nette\Transport\HttpBatchTransport;
 use Nette\Application\Application;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Compiler;
+use Nette\DI\Definitions\Reference;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
@@ -16,11 +22,6 @@ use Nette\Http\UrlScript;
 use Nette\Routing\SimpleRouter;
 use Nette\Schema\Processor;
 use PHPUnit\Framework\TestCase;
-use Apirelio\Nette\Application\RequestTracker;
-use Apirelio\Nette\Contracts\EventTransport;
-use Apirelio\Nette\DI\ApirelioExtension;
-use Apirelio\Nette\Transport\FileBufferTransport;
-use Apirelio\Nette\Transport\HttpBatchTransport;
 
 final class ApirelioExtensionTest extends TestCase
 {
@@ -78,13 +79,13 @@ final class ApirelioExtensionTest extends TestCase
 
     public function test_the_extension_compiles_inside_a_nette_container(): void
     {
-        $compiler = new Compiler();
+        $compiler = new Compiler;
         $builder = $compiler->getContainerBuilder();
         $builder->addDefinition('url')
             ->setFactory(UrlScript::class, ['https://api.example.test/api']);
         $builder->addDefinition('http.request')
             ->setType(IRequest::class)
-            ->setFactory(Request::class, [new \Nette\DI\Definitions\Reference('url')]);
+            ->setFactory(Request::class, [new Reference('url')]);
         $builder->addDefinition('http.response')
             ->setType(IResponse::class)
             ->setFactory(Response::class);
@@ -94,7 +95,7 @@ final class ApirelioExtensionTest extends TestCase
             ->setFactory(SimpleRouter::class, [['presenter' => 'Homepage']]);
         $builder->addDefinition('application')
             ->setFactory(Application::class);
-        $compiler->addExtension('apirelio', new ApirelioExtension());
+        $compiler->addExtension('apirelio', new ApirelioExtension);
         $compiler->addConfig([
             'apirelio' => [
                 'apiKey' => 'apr_test_secret',
@@ -109,15 +110,15 @@ final class ApirelioExtensionTest extends TestCase
     }
 
     /**
-     * @param array<string, mixed> $config
+     * @param  array<string, mixed>  $config
      * @return array{ApirelioExtension, Compiler}
      */
     private function extension(array $config): array
     {
-        $compiler = new Compiler();
-        $extension = new ApirelioExtension();
+        $compiler = new Compiler;
+        $extension = new ApirelioExtension;
         $extension->setCompiler($compiler, 'apirelio');
-        $normalized = (new Processor())->process($extension->getConfigSchema(), $config);
+        $normalized = (new Processor)->process($extension->getConfigSchema(), $config);
         self::assertIsArray($normalized);
         $extension->setConfig($normalized);
 
