@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.2'
+            nette: '3.2'
+            http: '3.3'
+          - php: '8.3'
+            nette: '3.2'
+            http: '3.3'
+          - php: '8.3'
+            nette: '3.3'
+            http: '3.4'
+          - php: '8.4'
+            nette: '3.3'
+            http: '3.4'
+
+    name: PHP ${{ matrix.php }} / Nette ${{ matrix.nette }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout shared PHP core
+        run: git clone --depth 1 https://github.com/pryznar/apirelio-php-core.git ../php-core
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl
+          coverage: none
+
+      - run: composer require --no-update "nette/application:^${{ matrix.nette }}" "nette/http:^${{ matrix.http }}"
+      - run: composer update --prefer-dist --no-interaction
+      - run: composer validate --strict
+      - run: composer test
+      - run: composer phpstan
