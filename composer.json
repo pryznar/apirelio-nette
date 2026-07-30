@@ -1,7 +1,7 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "tracium/nette",
-    "description": "Fail-safe Nette SDK for Tracium customer integration analytics.",
+    "name": "apirelio/nette",
+    "description": "Fail-safe Nette SDK for Apirelio customer integration analytics.",
     "type": "library",
     "license": "MIT",
     "require": {
@@ -12,7 +12,7 @@
         "nette/schema": "^1.2 || ^1.3",
         "php": "^8.2",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
-        "tracium/php-core": "^0.1"
+        "apirelio/php-core": "^0.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
@@ -20,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Tracium\\Nette\\": "src/"
+            "Apirelio\\Nette\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tracium\\Nette\\Tests\\": "tests/"
+            "Apirelio\\Nette\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -42,7 +42,7 @@
             "options": {
                 "symlink": true,
                 "versions": {
-                    "tracium/php-core": "0.1.0"
+                    "apirelio/php-core": "0.2.0"
                 }
             }
         }

@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette;
+namespace Apirelio\Nette;
 
 use Nette\Application\Request;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
 use Psr\Log\LoggerInterface;
 use Throwable;
-use Tracium\Core\Data\EventContext;
-use Tracium\Core\ErrorCodeExtractor;
-use Tracium\Core\EventFactory;
-use Tracium\Core\MetadataSanitizer;
-use Tracium\Nette\Contracts\ApplicationResolver;
-use Tracium\Nette\Contracts\CustomerResolver;
-use Tracium\Nette\Contracts\EventTransport;
-use Tracium\Nette\Data\TraciumApplication;
-use Tracium\Nette\Support\RouteNormalizer;
+use Apirelio\Core\Data\EventContext;
+use Apirelio\Core\ErrorCodeExtractor;
+use Apirelio\Core\EventFactory;
+use Apirelio\Core\MetadataSanitizer;
+use Apirelio\Nette\Contracts\ApplicationResolver;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Contracts\EventTransport;
+use Apirelio\Nette\Data\ApirelioApplication;
+use Apirelio\Nette\Support\RouteNormalizer;
 
-final class TraciumManager
+final class ApirelioManager
 {
     /** @var array<string, bool|float|int|string|null> */
     private array $requestMetadata = [];
@@ -76,7 +76,7 @@ final class TraciumManager
             requestBytes: 0,
             responseBytes: 0,
             customer: null,
-            application: new TraciumApplication($integration),
+            application: new ApirelioApplication($integration),
             apiVersion: null,
             sdk: 'nette',
             sdkVersion: '0.1.0',
@@ -97,7 +97,7 @@ final class TraciumManager
         try {
             $application = $this->applications->resolve($request);
             if (is_string($application)) {
-                $application = new TraciumApplication($application);
+                $application = new ApirelioApplication($application);
             }
             $metadata = $this->capturedMetadata();
             if ($exception !== null) {
@@ -189,7 +189,7 @@ final class TraciumManager
             $this->transport->send([$this->events->create($context)]);
         } catch (Throwable $throwable) {
             try {
-                $this->logger?->warning('Tracium event capture failed.', ['exception' => $throwable]);
+                $this->logger?->warning('Apirelio event capture failed.', ['exception' => $throwable]);
             } catch (Throwable) {
                 // Analytics must never alter the application response.
             }

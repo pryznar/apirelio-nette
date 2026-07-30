@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Transport;
+namespace Apirelio\Nette\Transport;
 
-use Tracium\Core\Config\TransportConfig;
-use Tracium\Nette\Contracts\EventTransport;
+use Apirelio\Core\Config\TransportConfig;
+use Apirelio\Nette\Contracts\EventTransport;
 
-final class HttpBatchTransport extends \Tracium\Core\Transport\HttpBatchTransport implements EventTransport
+final class HttpBatchTransport extends \Apirelio\Core\Transport\HttpBatchTransport implements EventTransport
 {
     /** @param array<string, mixed> $config */
     public function __construct(CurlIngestionClient $client, array $config)

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Resolver;
+namespace Apirelio\Nette\Resolver;
 
 use Nette\Application\Request;
-use Tracium\Nette\Contracts\CustomerResolver;
-use Tracium\Nette\Data\TraciumCustomer;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Data\ApirelioCustomer;
 
 final readonly class NullCustomerResolver implements CustomerResolver
 {
-    public function resolve(Request $request): ?TraciumCustomer
+    public function resolve(Request $request): ?ApirelioCustomer
     {
         return null;
     }

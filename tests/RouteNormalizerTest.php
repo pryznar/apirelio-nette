@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Tests;
+namespace Apirelio\Nette\Tests;
 
 use Nette\Application\Request;
 use PHPUnit\Framework\TestCase;
-use Tracium\Nette\Support\RouteNormalizer;
+use Apirelio\Nette\Support\RouteNormalizer;
 
 final class RouteNormalizerTest extends TestCase
 {

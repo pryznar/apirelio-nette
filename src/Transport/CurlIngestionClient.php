@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Transport;
+namespace Apirelio\Nette\Transport;
 
 use CurlHandle;
 use JsonException;
 use RuntimeException;
-use Tracium\Core\Contracts\IngestionClient;
+use Apirelio\Core\Contracts\IngestionClient;
 
 final readonly class CurlIngestionClient implements IngestionClient
 {
@@ -21,7 +21,7 @@ final readonly class CurlIngestionClient implements IngestionClient
     ): void {
         $curl = curl_init($endpoint);
         if (! $curl instanceof CurlHandle) {
-            throw new RuntimeException('Unable to initialize the Tracium HTTP client.');
+            throw new RuntimeException('Unable to initialize the Apirelio HTTP client.');
         }
 
         $payload = json_encode(['events' => $events], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
@@ -41,12 +41,12 @@ final readonly class CurlIngestionClient implements IngestionClient
         try {
             $response = curl_exec($curl);
             if ($response === false) {
-                throw new RuntimeException('Tracium request failed: '.curl_error($curl));
+                throw new RuntimeException('Apirelio request failed: '.curl_error($curl));
             }
 
             $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
             if ($status < 200 || $status >= 300) {
-                throw new RuntimeException(sprintf('Tracium ingestion returned HTTP %d.', $status));
+                throw new RuntimeException(sprintf('Apirelio ingestion returned HTTP %d.', $status));
             }
         } finally {
             curl_close($curl);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Tests;
+namespace Apirelio\Nette\Tests;
 
 use Nette\Application\Request;
 use Nette\Http\IRequest;
@@ -11,15 +11,15 @@ use Nette\Http\UrlScript;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use RuntimeException;
-use Tracium\Nette\Contracts\ApplicationResolver;
-use Tracium\Nette\Contracts\CustomerResolver;
-use Tracium\Nette\Contracts\EventTransport;
-use Tracium\Nette\Data\TraciumApplication;
-use Tracium\Nette\Data\TraciumCustomer;
-use Tracium\Nette\Support\RouteNormalizer;
-use Tracium\Nette\TraciumManager;
+use Apirelio\Nette\Contracts\ApplicationResolver;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Contracts\EventTransport;
+use Apirelio\Nette\Data\ApirelioApplication;
+use Apirelio\Nette\Data\ApirelioCustomer;
+use Apirelio\Nette\Support\RouteNormalizer;
+use Apirelio\Nette\ApirelioManager;
 
-final class TraciumManagerTest extends TestCase
+final class ApirelioManagerTest extends TestCase
 {
     public function test_it_captures_the_shared_privacy_safe_event_contract(): void
     {
@@ -74,7 +74,7 @@ final class TraciumManagerTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    private function manager(EventTransport $transport): TraciumManager
+    private function manager(EventTransport $transport): ApirelioManager
     {
         $httpRequest = $this->createMock(IRequest::class);
         $httpRequest->method('getMethod')->willReturn('POST');
@@ -90,19 +90,19 @@ final class TraciumManagerTest extends TestCase
             static fn (string $header): ?string => strtolower($header) === 'content-length' ? '48' : null,
         );
         $customers = new class implements CustomerResolver {
-            public function resolve(Request $request): TraciumCustomer
+            public function resolve(Request $request): ApirelioCustomer
             {
-                return new TraciumCustomer('customer_42', 'Acme Europe', 'growth');
+                return new ApirelioCustomer('customer_42', 'Acme Europe', 'growth');
             }
         };
         $applications = new class implements ApplicationResolver {
-            public function resolve(Request $request): TraciumApplication
+            public function resolve(Request $request): ApirelioApplication
             {
-                return new TraciumApplication('billing-production', 'Billing Production');
+                return new ApirelioApplication('billing-production', 'Billing Production');
             }
         };
 
-        return new TraciumManager(
+        return new ApirelioManager(
             $httpRequest,
             $httpResponse,
             $transport,
@@ -133,8 +133,8 @@ final class TraciumManagerTest extends TestCase
     {
         return [
             'enabled' => true,
-            'apiKey' => 'trc_test_secret',
-            'endpoint' => 'https://ingest.tracium.test',
+            'apiKey' => 'apr_test_secret',
+            'endpoint' => 'https://ingest.apirelio.test',
             'service' => 'billing-api',
             'environment' => 'production',
             'release' => '2026.07.29.1',

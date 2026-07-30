@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Transport;
+namespace Apirelio\Nette\Transport;
 
-use Tracium\Core\Config\BufferConfig;
-use Tracium\Nette\Contracts\EventTransport;
+use Apirelio\Core\Config\BufferConfig;
+use Apirelio\Nette\Contracts\EventTransport;
 
-final class FileBufferTransport extends \Tracium\Core\Transport\FileBufferTransport implements EventTransport
+final class FileBufferTransport extends \Apirelio\Core\Transport\FileBufferTransport implements EventTransport
 {
     /** @param array<string, mixed> $config */
     public function __construct(HttpBatchTransport $http, array $config)

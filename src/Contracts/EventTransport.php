@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Contracts;
+namespace Apirelio\Nette\Contracts;
 
-interface EventTransport extends \Tracium\Core\Contracts\EventTransport {}
+interface EventTransport extends \Apirelio\Core\Contracts\EventTransport {}

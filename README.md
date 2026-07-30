@@ -1,7 +1,7 @@
-# Tracium for Nette
+# Apirelio for Nette
 
 Fail-safe customer integration analytics for Nette applications. The package uses the shared
-[`tracium/php-core`](https://github.com/pryznar/tracium-php-core) event contract, sanitization,
+[`apirelio/php-core`](https://github.com/pryznar/apirelio-php-core) event contract, sanitization,
 retry and file buffer.
 
 ## Requirements
@@ -13,18 +13,18 @@ retry and file buffer.
 ## Installation
 
 ```bash
-composer require tracium/nette
+composer require apirelio/nette:^0.2
 ```
 
 Register the native DI extension:
 
 ```neon
 extensions:
-    tracium: Tracium\Nette\DI\TraciumExtension
+    apirelio: Apirelio\Nette\DI\ApirelioExtension
 
-tracium:
-    apiKey: %env.TRACIUM_API_KEY%
-    endpoint: https://your-tracium-host.example
+apirelio:
+    apiKey: %env.APIRELIO_API_KEY%
+    endpoint: https://api.apirelio.com
     service: billing-api
     environment: production
     release: 2026.07.29.1
@@ -42,9 +42,9 @@ The default `fileBuffer` transport persists events before sending them. Use a wr
 temp directory:
 
 ```neon
-tracium:
+apirelio:
     transport: fileBuffer
-    bufferPath: %tempDir%/tracium/events.ndjson
+    bufferPath: %tempDir%/apirelio/events.ndjson
     batchSize: 500
     flushIntervalSeconds: 10
 ```
@@ -52,25 +52,25 @@ tracium:
 For direct synchronous delivery:
 
 ```neon
-tracium:
+apirelio:
     transport: sync
 ```
 
 ## Request context
 
-Inject `Tracium\Nette\TraciumManager` into a presenter or service:
+Inject `Apirelio\Nette\ApirelioManager` into a presenter or service:
 
 ```php
-use Tracium\Nette\TraciumManager;
+use Apirelio\Nette\ApirelioManager;
 
 final class InvoiceService
 {
-    public function __construct(private TraciumManager $tracium) {}
+    public function __construct(private ApirelioManager $apirelio) {}
 
     public function create(): void
     {
-        $this->tracium->addMetadata(['region' => 'eu-central']);
-        $this->tracium->setErrorCode('VALIDATION_FAILED');
+        $this->apirelio->addMetadata(['region' => 'eu-central']);
+        $this->apirelio->setErrorCode('VALIDATION_FAILED');
     }
 }
 ```
@@ -81,7 +81,7 @@ cookies and authorization headers are never collected.
 ## Manual business events
 
 ```php
-$tracium->track(
+$apirelio->track(
     event: 'invoice.created',
     integration: 'fakturoid',
     metadata: ['region' => 'eu-central'],
@@ -94,14 +94,14 @@ Implement the resolver contracts:
 
 ```php
 use Nette\Application\Request;
-use Tracium\Nette\Contracts\CustomerResolver;
-use Tracium\Nette\Data\TraciumCustomer;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Data\ApirelioCustomer;
 
 final class CurrentCustomerResolver implements CustomerResolver
 {
-    public function resolve(Request $request): ?TraciumCustomer
+    public function resolve(Request $request): ?ApirelioCustomer
     {
-        return new TraciumCustomer('customer_42', 'Acme Europe', 'growth');
+        return new ApirelioCustomer('customer_42', 'Acme Europe', 'growth');
     }
 }
 ```
@@ -113,7 +113,7 @@ services:
     app.customerResolver: App\Analytics\CurrentCustomerResolver
     app.applicationResolver: App\Analytics\CurrentApplicationResolver
 
-tracium:
+apirelio:
     customerResolver: app.customerResolver
     applicationResolver: app.applicationResolver
 ```

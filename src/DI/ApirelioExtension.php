@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\DI;
+namespace Apirelio\Nette\DI;
 
 use Nette\Application\Application;
 use Nette\DI\CompilerExtension;
@@ -12,25 +12,25 @@ use LogicException;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use Psr\Log\LoggerInterface;
-use Tracium\Nette\Application\RequestTracker;
-use Tracium\Nette\Contracts\ApplicationResolver;
-use Tracium\Nette\Contracts\CustomerResolver;
-use Tracium\Nette\Contracts\EventTransport;
-use Tracium\Nette\Resolver\NullApplicationResolver;
-use Tracium\Nette\Resolver\NullCustomerResolver;
-use Tracium\Nette\Support\RouteNormalizer;
-use Tracium\Nette\TraciumManager;
-use Tracium\Nette\Transport\CurlIngestionClient;
-use Tracium\Nette\Transport\FileBufferTransport;
-use Tracium\Nette\Transport\HttpBatchTransport;
+use Apirelio\Nette\Application\RequestTracker;
+use Apirelio\Nette\Contracts\ApplicationResolver;
+use Apirelio\Nette\Contracts\CustomerResolver;
+use Apirelio\Nette\Contracts\EventTransport;
+use Apirelio\Nette\Resolver\NullApplicationResolver;
+use Apirelio\Nette\Resolver\NullCustomerResolver;
+use Apirelio\Nette\Support\RouteNormalizer;
+use Apirelio\Nette\ApirelioManager;
+use Apirelio\Nette\Transport\CurlIngestionClient;
+use Apirelio\Nette\Transport\FileBufferTransport;
+use Apirelio\Nette\Transport\HttpBatchTransport;
 
-final class TraciumExtension extends CompilerExtension
+final class ApirelioExtension extends CompilerExtension
 {
     public function getConfigSchema(): Schema
     {
         return Expect::structure([
             'enabled' => Expect::bool(true),
-            'endpoint' => Expect::string('https://ingest.tracium.example')->min(1),
+            'endpoint' => Expect::string('https://api.apirelio.com')->min(1),
             'apiKey' => Expect::string(''),
             'service' => Expect::string('nette')->min(1),
             'environment' => Expect::string('production')->min(1),
@@ -41,7 +41,7 @@ final class TraciumExtension extends CompilerExtension
             'connectTimeoutSeconds' => Expect::float(0.5)->min(0.1),
             'batchSize' => Expect::int(500)->min(1)->max(500),
             'flushIntervalSeconds' => Expect::int(10)->min(1),
-            'bufferPath' => Expect::string(sys_get_temp_dir().'/tracium/events.ndjson')->min(1),
+            'bufferPath' => Expect::string(sys_get_temp_dir().'/apirelio/events.ndjson')->min(1),
             'errorCodeJsonPath' => Expect::string('error.code')->min(1),
             'captureHeaders' => Expect::listOf('string')->default(['x-api-version', 'x-sdk-version', 'user-agent']),
             'metadataKeys' => Expect::listOf('string')->default([]),
@@ -95,7 +95,7 @@ final class TraciumExtension extends CompilerExtension
 
         $logger = $builder->getByType(LoggerInterface::class);
         $builder->addDefinition($this->prefix('manager'))
-            ->setFactory(TraciumManager::class, [
+            ->setFactory(ApirelioManager::class, [
                 new Reference('http.request'),
                 new Reference('http.response'),
                 new Reference($this->prefix('transport')),

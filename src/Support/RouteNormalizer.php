@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Support;
+namespace Apirelio\Nette\Support;
 
 use Nette\Application\Request;
 

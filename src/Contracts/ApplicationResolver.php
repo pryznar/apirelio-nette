@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Contracts;
+namespace Apirelio\Nette\Contracts;
 
 use Nette\Application\Request;
-use Tracium\Nette\Data\TraciumApplication;
+use Apirelio\Nette\Data\ApirelioApplication;
 
 interface ApplicationResolver
 {
-    public function resolve(Request $request): TraciumApplication|string|null;
+    public function resolve(Request $request): ApirelioApplication|string|null;
 }

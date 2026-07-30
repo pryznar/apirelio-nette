@@ -5,7 +5,7 @@
          cacheDirectory=".phpunit.cache"
          colors="true">
     <testsuites>
-        <testsuite name="Tracium Nette SDK">
+        <testsuite name="Apirelio Nette SDK">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tracium\Nette\Application;
+namespace Apirelio\Nette\Application;
 
 use Nette\Application\Application;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use Throwable;
-use Tracium\Nette\TraciumManager;
+use Apirelio\Nette\ApirelioManager;
 
 final class RequestTracker
 {
@@ -18,7 +18,7 @@ final class RequestTracker
 
     private bool $captured = false;
 
-    public function __construct(private readonly TraciumManager $tracium) {}
+    public function __construct(private readonly ApirelioManager $apirelio) {}
 
     public function onRequest(Application $application, Request $request): void
     {
@@ -30,7 +30,7 @@ final class RequestTracker
     public function onResponse(Application $application, Response $response): void
     {
         if ($this->request !== null && ! $this->captured) {
-            $this->tracium->capture($this->request, $this->duration());
+            $this->apirelio->capture($this->request, $this->duration());
         }
 
         $this->reset();
@@ -39,7 +39,7 @@ final class RequestTracker
     public function onError(Application $application, Throwable $exception): void
     {
         if ($this->request !== null && ! $this->captured) {
-            $this->tracium->capture($this->request, $this->duration(), $exception);
+            $this->apirelio->capture($this->request, $this->duration(), $exception);
             $this->captured = true;
         }
     }
