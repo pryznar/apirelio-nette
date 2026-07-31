@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2026-07-31
+
+- Use the active `https://apirelio.com` ingestion endpoint by default.
+
 ## 0.2.0 - 2026-07-30
 
 - Rebrand the extension, namespace and service identifiers to Apirelio.

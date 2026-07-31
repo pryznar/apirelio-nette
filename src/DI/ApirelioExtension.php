@@ -30,7 +30,7 @@ final class ApirelioExtension extends CompilerExtension
     {
         return Expect::structure([
             'enabled' => Expect::bool(true),
-            'endpoint' => Expect::string('https://api.apirelio.com')->min(1),
+            'endpoint' => Expect::string('https://apirelio.com')->min(1),
             'apiKey' => Expect::string(''),
             'service' => Expect::string('nette')->min(1),
             'environment' => Expect::string('production')->min(1),
