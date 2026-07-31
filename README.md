@@ -24,7 +24,7 @@ extensions:
 
 apirelio:
     apiKey: %env.APIRELIO_API_KEY%
-    endpoint: https://api.apirelio.com
+    endpoint: https://apirelio.com
     service: billing-api
     environment: production
     release: 2026.07.29.1
