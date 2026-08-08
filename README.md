@@ -1,5 +1,9 @@
 # Apirelio for Nette
 
+[Documentation](https://apirelio.com/docs/php/nette) · [Packagist](https://packagist.org/packages/apirelio/nette) · [Apirelio](https://apirelio.com)
+
+> Connect Nette API errors, latency and releases to the affected customers without capturing request or response payloads.
+
 Fail-safe customer integration analytics for Nette applications. The package uses the shared
 [`apirelio/php-core`](https://github.com/pryznar/apirelio-php-core) event contract, sanitization,
 retry and file buffer.
