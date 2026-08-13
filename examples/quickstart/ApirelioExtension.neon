@@ -1,0 +1,10 @@
+extensions:
+    apirelio: Apirelio\Nette\DI\ApirelioExtension
+
+apirelio:
+    apiKey: %env.APIRELIO_API_KEY%
+    service: github-quickstart
+    environment: development
+    paths:
+        - /api/*
+
