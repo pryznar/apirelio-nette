@@ -44,6 +44,7 @@ final class ApirelioManagerTest extends TestCase
         self::assertSame('billing-production', $event['application_id']);
         self::assertSame('VALIDATION_FAILED', $event['error_code']);
         self::assertSame('v2', $event['api_version']);
+        self::assertSame('1.0.0', $event['sdk_version']);
         self::assertSame(['region' => 'eu-central', 'header.x-api-version' => 'v2'], $event['metadata']);
         self::assertStringNotContainsString('secret', json_encode($event, JSON_THROW_ON_ERROR));
         self::assertStringNotContainsString('api_token', json_encode($event, JSON_THROW_ON_ERROR));
@@ -77,7 +78,7 @@ final class ApirelioManagerTest extends TestCase
 
     private function manager(EventTransport $transport): ApirelioManager
     {
-        $httpRequest = $this->createMock(IRequest::class);
+        $httpRequest = $this->createStub(IRequest::class);
         $httpRequest->method('getMethod')->willReturn('POST');
         $httpRequest->method('getUrl')->willReturn(new UrlScript('https://api.example.test/api/invoices/123'));
         $httpRequest->method('getHeader')->willReturnCallback(static fn (string $header): ?string => match (strtolower($header)) {
@@ -85,7 +86,7 @@ final class ApirelioManagerTest extends TestCase
             'x-api-version' => 'v2',
             default => null,
         });
-        $httpResponse = $this->createMock(IResponse::class);
+        $httpResponse = $this->createStub(IResponse::class);
         $httpResponse->method('getCode')->willReturn(422);
         $httpResponse->method('getHeader')->willReturnCallback(
             static fn (string $header): ?string => strtolower($header) === 'content-length' ? '48' : null,
