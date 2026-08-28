@@ -17,7 +17,7 @@ retry and file buffer.
 ## Installation
 
 ```bash
-composer require apirelio/nette:^0.2
+composer require apirelio/nette:^1.0
 ```
 
 Register the native DI extension:
