@@ -79,7 +79,7 @@ final class ApirelioManager
             application: new ApirelioApplication($integration),
             apiVersion: null,
             sdk: 'nette',
-            sdkVersion: '1.0.0',
+            sdkVersion: '1.0.1',
             release: $this->stringOrNull($this->config['release']),
             errorCode: null,
             metadata: $this->sanitizeMetadata($metadata),
@@ -118,7 +118,7 @@ final class ApirelioManager
                 application: $application,
                 apiVersion: $this->stringOrNull($this->httpRequest->getHeader('X-Api-Version')),
                 sdk: 'nette',
-                sdkVersion: '1.0.0',
+                sdkVersion: '1.0.1',
                 release: $this->stringOrNull($this->config['release']),
                 errorCode: $this->errorCodes->extract(
                     $this->requestErrorCode,
